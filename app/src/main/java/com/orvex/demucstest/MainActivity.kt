@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
     private fun captureTenSeconds(): File {
         val minBytes = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
         check(minBytes > 0) { "El teléfono no admite captura PCM a 44,1 kHz (código $minBytes)." }
-        val recorder = AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, max(minBytes, sampleRate / 5 * 2))
+      val recorder = AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, maxOf(minBytes, sampleRate / 5 * 2))
         check(recorder.state == AudioRecord.STATE_INITIALIZED) { "No se pudo inicializar AudioRecord." }
         val out = File(filesDir, "redmi_capture_f32.raw"); val shorts = ShortArray(2048)
         val bytes = ByteArray(shorts.size * 4); val bb = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
